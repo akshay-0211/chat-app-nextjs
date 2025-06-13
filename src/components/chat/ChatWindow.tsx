@@ -4,7 +4,6 @@ import { User, Message } from '@/types/chat';
 import { getCurrentUser, dummyMessages } from '@/utils/dummy-data';
 import { getColorForUser } from '@/utils/colors';
 import { SendHorizontal } from 'lucide-react';
-import Image from 'next/image';
 
 interface ChatWindowProps {
   contact: User;
@@ -13,7 +12,6 @@ interface ChatWindowProps {
 export default function ChatWindow({ contact }: ChatWindowProps) {
   const [messages, setMessages] = useState<Message[]>(dummyMessages[contact.id] || []);
   const [newMessage, setNewMessage] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const currentUser = getCurrentUser();
   const { bg, text } = getColorForUser(contact.id);
@@ -53,7 +51,6 @@ export default function ChatWindow({ contact }: ChatWindowProps) {
 
     setMessages((prev) => [...prev, message]);
     setNewMessage('');
-    setIsTyping(true);
 
     // Simulate bot reply
     setTimeout(() => {
@@ -66,7 +63,6 @@ export default function ChatWindow({ contact }: ChatWindowProps) {
         status: 'delivered',
       };
       setMessages((prev) => [...prev, botMessage]);
-      setIsTyping(false);
     }, 1500);
   };
 
